@@ -1,5 +1,15 @@
 <?php
+require_once('estudiante.php');
+require_once('gestionEstudiante.php');
+
+$gestion = new gestionEstudiante();
+
 class Menu{
+    private $gestion;
+
+    public function __construct($gestion) {
+        $this->gestion = $gestion;
+    }
     function mainMenu() {
         echo "\n";
         echo "=========== Bienvenido ==========\n";
@@ -14,15 +24,21 @@ class Menu{
         switch ($opcionMenu) {
             case '1':
                 echo "Seleccionaste Inscribir Usuarios\n";
-                subMenuInscripciones();
+
+                echo "\n";
+                echo "========= Inscripciones ========\n";
+            
+                echo "=========== Instiform ==========\n";
+                echo "\n";
+
                 break;
             case '2':
                 echo "Seleccionaste Configuracion de Usuarios\n";
-                subMenuUsuarios();
+                $this->subMenuUsuarios();
                 break;
             case '3':
                 echo "Seleccionaste Configuracion de Cursos\n";
-                subMenuCursos();
+                $this->subMenuCursos();
                 break;
             case '0':
                 echo "\n";
@@ -34,13 +50,7 @@ class Menu{
         }
     }
     
-    function subMenuInscripciones() {
-        echo "\n";
-        echo "========= Inscripciones ========\n";
-    
-        echo "=========== Instiform ==========\n";
-        echo "\n";
-    }
+
     
     function subMenuUsuarios() {
         echo "\n";
@@ -57,9 +67,17 @@ class Menu{
         switch ($opcionUser){
             case '1':
                 echo "Seleccionaste Dar de Alta Usuario\n";
+                $nombre = readline("Ingrese nombre del Estudiante");
+                $apellido = readline("Ingrese apellido del Estudiante");
+                $dni = readline("Ingrese dni del Estudiante");
+                $email = readline("Ingrese email del Estudiante");
+                $estudiante = new Estudiante($nombre, $apellido, $dni, $email);
+                $this->gestion->agregarEstudiante($estudiante);
                 break;
             case '2':
                 echo "Seleccionaste Dar de Baja Usuario\n";
+                $pdni = readline("Ingrese el dni del usuario a eliminar");
+                $gestion->eliminarEstudiantePorDNI($pdni);
                 break;
             case '3':
                 echo "Seleccionaste Modificar Datos de Usuario\n";
@@ -69,7 +87,7 @@ class Menu{
                 break;
             case '0':
                 echo "Seleccionaste Volver al Menu Principal\n";
-                mainMenu();
+                $this->mainMenu();
         }
     }
     
@@ -100,7 +118,7 @@ class Menu{
                 break;
             case '0':
                 echo "Seleccionaste Volver Al Menu Principal\n";
-                mainMenu();
+                $this->mainMenu();
         }
     }
 }
