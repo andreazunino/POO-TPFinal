@@ -1,7 +1,7 @@
 <?php
 
 require_once('menu.php');
-$menu = new menu($gestion);
+$menu = new menu($gestionEstudiante,$gestionCurso);
 while (true) {
     $menu->mainMenu();
 }
