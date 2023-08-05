@@ -186,9 +186,30 @@ class Menu{
                 break;
             case '3':
                 echo "Seleccionaste Modificar Datos de Curso\n";
+                $idModificar = readline("Ingrese el ID del curso a modificar: ");
+                $cursoEncontrado = $this->gestionCurso->buscarCursosPorCodigo($idModificar);
+                if ($cursoEncontrado) {
+                    $idNuevo = readline("Ingrese el nuevo id del curso: ");
+                    $nombreNuevo = readline("Ingrese el nuevo nombre del curso: ");
+                    $this->gestionCurso->modificarCursoPorId($idModificar, $idNuevo, $nombreNuevo);
+                    echo "Los datos del curso id $idModificar han sido modificados correctamente.\n";
+                } else {
+                    echo "No se encontró ningún curso con el id $idModificar.\n";
+                }
                 break;
             case '4':
                 echo "Seleccionaste Listar Cursos\n";
+                $cursos = $this->gestionCurso->obtenerCursos();
+    
+                if (empty($cursos)) {
+                    echo "No hay cursos registrados.\n";
+                } else {
+                echo "Lista de Cursos:\n";
+                foreach ($cursos as $curso) {
+                    $this->gestionCurso->mostrarCurso($curso);;
+                }
+    }
+    break;
                 break;
             case '0':
                 echo "Seleccionaste Volver Al Menu Principal\n";

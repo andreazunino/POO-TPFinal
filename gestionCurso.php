@@ -49,5 +49,17 @@ class gestionCurso {
         }
         return false;
     }
+    public function modificarCursoPorId($id, $nuevoId, $nuevoNombre) {
+        foreach ($this->cursos as $curso) {
+            if ($curso->getId() === $id) {
+                $curso->setId($nuevoId);
+                $curso->setNombre($nuevoNombre);
+                return true;
+            }
+        }
+    }
+    public function obtenerCursos() {
+        return $this->cursos;
+    }
 }
 ?>
